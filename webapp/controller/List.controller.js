@@ -1,19 +1,35 @@
-sap.ui.define(["./BaseController"], function (BaseController) {
-  "use strict";
+sap.ui.define(
+  ["./BaseController", "sap/ui/model/json/JSONModel"],
+  function (BaseController, JSONModel) {
+    "use strict";
 
-  return BaseController.extend("assignment.controller.List", {
-    onInit: function () {
-      var oList = this.byId("list");
+    return BaseController.extend("assignment.controller.List", {
+      onInit: function () {
+        var oList = this.byId("list");
 
-      this._oList = oList;
-    },
+        this._oList = oList;
 
-    onSelectionChange: function () {},
+        var oViewModel = this._createViewModel();
 
-    onOpenViewSettings: function () {},
+        this.setModel(oViewModel, "listView");
+      },
 
-    onSearch: function (oEvent) {},
+      onSelectionChange: function () {},
 
-    onUpdateFinished: function () {},
-  });
-});
+      onOpenViewSettings: function () {},
+
+      onSearchBySaleOrderNumber: function () {},
+      onSearchByCustomerName: function () {},
+
+      onSearchByProductName: function () {},
+
+      onUpdateFinished: function () {},
+
+      _createViewModel: function () {
+        return new JSONModel({
+          isFilterBarVisible: false,
+        });
+      },
+    });
+  }
+);

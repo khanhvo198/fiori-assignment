@@ -8,16 +8,15 @@
     <semantic:content>
       <!-- For client side filtering add this to the items attribute: parameters: {operationMode: 'Client'}}" -->
       <List id="list" width="auto" class="sapFDynamicPageAlignContent" items="{
-                    path: '/SalesOrderSet',
-                    sorter: {
-                        path: 'CreatedAt',
-                        descending: true
-                    },
-                    parameters: {
-                      'expand': 'ToBusinessPartner'
-                    },
-                    groupHeaderFactory: '.createGroupHeader'
-                }" busyIndicatorDelay="{listView>/delay}" noDataText="{listView>/noDataText}" mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}" growing="true" growingScrollToLoad="true" updateFinished=".onUpdateFinished" selectionChange=".onSelectionChange">
+                        path: '/SalesOrderSet',
+                        sorter: {
+                            path: 'CreatedAt',
+                            descending: true
+                        },
+                        parameters: { 
+                          'expand': 'ToBusinessPartner'
+                        },
+                        groupHeaderFactory: '.createGroupHeader'}" busyIndicatorDelay="{listView>/delay}" noDataText="{listView>/noDataText}" mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}" growing="true" growingScrollToLoad="true" updateFinished=".onUpdateFinished" selectionChange=".onSelectionChange">
 
         <infoToolbar>
           <Toolbar active="true" id="filterBar" visible="{listView>/isFilterBarVisible}" press=".onOpenViewSettings">
@@ -27,14 +26,27 @@
 
         <headerToolbar>
           <OverflowToolbar>
-            <SearchField id="searchField" showRefreshButton="true" tooltip="{i18n>listSearchTooltip}" search=".onSearch" width="auto">
+            <SearchField id="searchBySaleOrderNumber" placeholder="Search by Sale Order Number" showRefreshButton="true" tooltip="{i18n>listSearchTooltip}" search=".onSearchBySaleOrderNumber" width="auto">
               <layoutData>
                 <OverflowToolbarLayoutData minWidth="150px" maxWidth="240px" shrinkable="true" priority="NeverOverflow"/>
               </layoutData>
             </SearchField>
+
+            <SearchField id="searchByCustomerName" placeholder="Search by Customer Name" showRefreshButton="true" tooltip="{i18n>listSearchTooltip}" search=".onSearchByCustomerName" width="auto">
+              <layoutData>
+                <OverflowToolbarLayoutData minWidth="150px" maxWidth="240px" shrinkable="true" priority="NeverOverflow"/>
+              </layoutData>
+            </SearchField>
+
+            <SearchField id="searchByProductName" placeholder="Search by Product Name" showRefreshButton="true" tooltip="{i18n>listSearchTooltip}" search=".onSearchByProductName" width="auto">
+              <layoutData>
+                <OverflowToolbarLayoutData minWidth="150px" maxWidth="240px" shrinkable="true" priority="NeverOverflow"/>
+              </layoutData>
+            </SearchField>
+
+
             <ToolbarSpacer/>
             <Button id="sortButton" press=".onOpenViewSettings" icon="sap-icon://sort" type="Transparent"/>
-
             <Button id="filterButton" press=".onOpenViewSettings" icon="sap-icon://filter" type="Transparent"/>
             <Button id="groupButton" press=".onOpenViewSettings" icon="sap-icon://group-2" type="Transparent"/>
 
@@ -46,26 +58,18 @@
                             path: 'NetAmount',
                             formatter: '.formatter.numberUnit'
                         }" numberUnit="{CurrencyCode}">
-
-            <ObjectAttribute text="{
-              path: 'CreatedAt',
-              type: 'sap.ui.model.type.Date',
-              formatOptions: {
-              style: 'short'
-              }
-              }" />
-            <ObjectAttribute text="{ToBusinessPartner/BusinessPartnerID}"/>
+            <ObjectAttribute text="{path: 'CustomerID'}" title="CustomerID" />
+            <ObjectAttribute text="{path: 'GrossAmount'}" title="Gross Amount" />
+            <ObjectAttribute text="{path: 'TaxAmount'}" title="Tax Amount"/>
+            <ObjectAttribute text="{path: 'SalesOrderID'}" title="Sale Order No"/>
             <firstStatus>
-              <ObjectStatus
-              title ="{ToBusinessPartner/Address/Country}" text="{ToBusinessPartner/Address/City}"/>
+              <ObjectStatus text="{path: 'BillingStatus'}" title="Billing Status" />
             </firstStatus>
-            <markers>
-              <ObjectMarker type="{=
-              ${ToBusinessPartner/Address/Country} === 'MX' &amp;&amp;
-              ${ToBusinessPartner/Address/City} ==='Mexiko City'
-              ? 'Favorite' : 'Flagged'
-              }"/>
-            </markers>
+            <secondStatus>
+              <ObjectStatus text="{path: 'DeliveryStatus'}" title="Delivery Status" />
+
+            </secondStatus>
+
           </ObjectListItem>
         </items>
       </List>
