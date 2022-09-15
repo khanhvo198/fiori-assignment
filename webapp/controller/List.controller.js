@@ -11,6 +11,11 @@ sap.ui.define(
 
         var oViewModel = this._createViewModel();
 
+        // this._oListFilterState = {
+        //   aFilter: [],
+        //   aSearch: [],
+        // };
+
         this.setModel(oViewModel, "listView");
       },
 
@@ -18,10 +23,18 @@ sap.ui.define(
 
       onOpenViewSettings: function () {},
 
-      onSearchBySaleOrderNumber: function () {},
-      onSearchByCustomerName: function () {},
+      onSearchBySaleOrderNumber: function (oEvent) {
+        // var sQuery = oEvent.getParameter("query");
+        // if (sQuery === "") return;
+        // this._oListFilterState.aSearch.push(
+        //   new Filter("CustomerName", FilterOperator.Contains, sQuery)
+        // );
+        // this._applyFilterSearch();
+      },
 
-      onSearchByProductName: function () {},
+      onSearchByCustomerName: function (oEvent) {},
+
+      onSearchByProductName: function (oEvent) {},
 
       onUpdateFinished: function () {},
 
@@ -30,6 +43,8 @@ sap.ui.define(
           isFilterBarVisible: false,
         });
       },
+
+      // _applyFilterSearch: function () {},
     });
   }
 );

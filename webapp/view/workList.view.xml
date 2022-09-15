@@ -1,0 +1,113 @@
+<mvc:View controllerName="assignment.controller.workList"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m" displayBlock="true" height="100%" busyIndicatorDelay="0"
+  xmlns:semantic="sap.f.semantic">
+
+
+  <semantic:SemanticPage headerPinnable="true" toggleHeaderOnTitleClick="true">
+
+    <semantic:content>
+      <IconTabBar id="iconTabBar" select="onQuickFilter" expandable="false" applyContentPadding="false">
+        <items>
+          <IconTabFilter key="all" showAll="true" count="All" text="Sale Orders"/>
+          <IconTabSeparator/>
+          <IconTabFilter key="paid" icon="sap-icon://paid-leave" iconColor="Positive" count="{worklistView>/paid}" text="Paid"/>
+          <IconTabFilter key="unPaid" icon="sap-icon://unpaid-leave" iconColor="Critical" count="{worklistView>/unPaid}" text="Un-Paid"/>
+        </items>
+        <content>
+          <Table id="worklist" width="auto" items="{ 
+            path: '/SalesOrderSet',
+            sorter: {
+              path: 'DeliveryStatus',
+              descending: false
+            }
+          }" growing="true" growingScrollToLoad="true" updateFinished=".onUpdatedFinished" fixedLayout="false">
+
+            <headerToolbar>
+              <OverflowToolbar>
+                <Title id="tableHeader" level="H3" text="{worklistView>/saleOrderTitle}" />
+
+                <ToolbarSpacer />
+                <SearchField id="searchBySaleOrderNumber" placeholder="Search by Sale Order Number" showRefreshButton="true" tooltip="{i18n>listSearchTooltip}" search=".onSearchBySaleOrderNumber">
+                  <layoutData>
+                    <OverflowToolbarLayoutData maxWidth="180px" priority="NeverOverflow"/>
+                  </layoutData>
+                </SearchField>
+                <SearchField id="searchByCustomerName" placeholder="Search by Customer Name" showRefreshButton="true" tooltip="{i18n>listSearchTooltip}" search=".onSearchByCustomerName">
+                  <layoutData>
+                    <OverflowToolbarLayoutData maxWidth="180px" priority="NeverOverflow"/>
+                  </layoutData>
+                </SearchField>
+
+                <SearchField id="searchByProductName" placeholder="Search by Product Name" showRefreshButton="true" tooltip="{i18n>listSearchTooltip}" search=".onSearchByProductName">
+                  <layoutData>
+                    <OverflowToolbarLayoutData maxWidth="180px" priority="NeverOverflow"/>
+                  </layoutData>
+                </SearchField>
+              </OverflowToolbar>
+            </headerToolbar>
+
+            <columns>
+              <Column>
+                <Text text="Sale Order No" />
+              </Column>
+              <Column >
+                <Text text="Customer Name"/>
+              </Column>
+              <Column>
+                <Text text="Customer ID" />
+              </Column>
+              <Column>
+                <Text text="Gross Amount" />
+              </Column>
+              <Column>
+                <Text text="Net Amount" />
+              </Column>
+              <Column>
+                <Text text="Tax Amount" />
+              </Column>
+              <Column>
+                <Text text="Billing" />
+              </Column>
+              <Column>
+                <Text text="Delivery" />
+              </Column>
+            </columns>
+            <items>
+              <ColumnListItem type="Navigation" press=".onPress">
+                <cells>
+                  <ObjectIdentifier title="{SalesOrderID}" />
+                  <ObjectAttribute text="{CustomerName}" />
+                  <ObjectAttribute text="{CustomerID}" />
+                  <ObjectNumber number="{
+                      path: 'GrossAmount'
+                    }" unit="{CurrencyCode}" />
+                  <ObjectNumber number="{
+                      path: 'NetAmount'
+                    }" unit="{CurrencyCode}" />
+                  <ObjectNumber number="{
+                      path: 'TaxAmount'
+                    }" unit="{CurrencyCode}" />
+                  <ObjectStatus text="{BillingStatusDescription}" />
+                  <ObjectStatus text="{DeliveryStatusDescription}" />
+                </cells>
+              </ColumnListItem>
+            </items>
+          </Table>
+
+        </content>
+      </IconTabBar>
+
+
+
+
+    </semantic:content>
+
+  </semantic:SemanticPage>
+
+
+
+
+
+
+</mvc:View>

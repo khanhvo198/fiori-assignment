@@ -72,7 +72,9 @@
       "": {
         "dataSource": "mainService",
         "preload": true,
-        "settings": {}
+        "settings": {
+          "defaultBindingMode": "TwoWay"
+        }
       }
     },
     "resources": {
@@ -88,21 +90,31 @@
         "viewType": "XML",
         "async": true,
         "viewPath": "assignment.view",
-        "controlId": "layout",
-        "controlAggregation": "beginColumnPages"
+        "controlId": "app",
+        "controlAggregation": "pages"
       },
       "routes": [
         {
-          "name": "list",
+          "name": "worklist",
           "pattern": "",
-          "target": "list"
+          "target": "worklist"
+        },
+        {
+          "name": "object",
+          "pattern": "SalesOrderSet/{objectId}",
+          "target": "object"
         }
       ],
       "targets": {
-        "list": {
-          "viewName": "List",
+        "worklist": {
+          "viewName": "workList",
           "viewLevel": 1,
-          "viewId": "list"
+          "viewId": "worklist"
+        },
+        "object": {
+          "viewName": "saleOrderDetail",
+          "viewLevel": 2,
+          "viewId": "object"
         }
       }
     },
@@ -110,7 +122,7 @@
       "viewName": "assignment.view.App",
       "type": "XML",
       "async": true,
-      "id": "App"
+      "id": "app"
     }
   }
 }
