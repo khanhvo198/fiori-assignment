@@ -1,0 +1,26 @@
+<mvc:View controllerName="assignment.controller.saleOrderDetail"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m" displayBlock="true" height="100%" busyIndicatorDelay="0"
+  xmlns:semantic="sap.f.semantic">
+
+  <semantic:SemanticPage id="page" headerPinnable="false" toggleHeaderOnTitleClick="false" busy="{objectView>/busy}" busyIndicatorDelay="{objectView>/delay}">
+
+    <semantic:titleHeading>
+      <Title text="{CustomerName}" level="H2"/>
+    </semantic:titleHeading>
+
+    <semantic:headerContent>
+      <ObjectNumber number="{
+                    path: 'NetAmount',
+                    formatter: '.formatter.numberUnit'
+                }" unit="{CurrencyCode}" />
+    </semantic:headerContent>
+
+    <semantic:sendEmailAction>
+      <semantic:SendEmailAction id="shareEmail"/>
+    </semantic:sendEmailAction>
+
+  </semantic:SemanticPage>
+
+
+</mvc:View>
