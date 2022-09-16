@@ -5,8 +5,16 @@ sap.ui.define(
     "sap/ui/model/Sorter",
     "sap/ui/model/Filter",
     "sap/ui/model/json/JSONModel",
+    "sap/m/GroupHeaderListItem",
   ],
-  function (BaseController, Fragment, Sorter, Filter, JSONModel) {
+  function (
+    BaseController,
+    Fragment,
+    Sorter,
+    Filter,
+    JSONModel,
+    GroupHeaderListItem
+  ) {
     "use strict";
 
     return BaseController.extend("assignment.controller.workList", {
@@ -68,10 +76,7 @@ sap.ui.define(
       },
       _showObject: function (oItem) {
         this.getRouter().navTo("object", {
-          objectId: oItem
-            .getBindingContext()
-            .getPath()
-            .substring("/SalesOrderSet".length),
+          objectId: oItem.getBindingContext().getProperty("SalesOrderID"),
         });
       },
 
@@ -83,6 +88,22 @@ sap.ui.define(
             "Delivery Status: " +
             oGroup.oModel.oData[tmp].BillingStatusDescription,
         };
+      },
+
+      onGroup: function (oContext) {
+        var sKey = oContext.getProperty("DeliveryStatus");
+        return {
+          key: sKey,
+          text: sKey,
+        };
+      },
+
+      groupHeader: function (oGroup) {
+        var title = oGroup.key === "D" ? "Delivered" : "Initial";
+        return new sap.m.GroupHeaderListItem({
+          title: "Delivery Status: " + title,
+          upperCase: false,
+        });
       },
     });
   }

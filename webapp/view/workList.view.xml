@@ -19,8 +19,10 @@
             path: '/SalesOrderSet',
             sorter: {
               path: 'DeliveryStatus',
-              descending: false
-            }
+              descending: true,
+              group: '.onGroup'
+            },
+            groupHeaderFactory: '.groupHeader'
           }" growing="true" growingScrollToLoad="true" updateFinished=".onUpdatedFinished" fixedLayout="false">
 
             <headerToolbar>
