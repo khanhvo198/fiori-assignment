@@ -69,7 +69,24 @@ sap.ui.define(
 
       onSearchBySaleOrderNumber: function (oEvent) {},
       onSearchByCustomerName: function (oEvent) {},
-      onSearchByProductName: function (oEvent) {},
+      onSearchByProductName: function (oEvent) {
+        var sQuery = oEvent.getParameter("query");
+        var oModel = this.getModel();
+        var oFilter = [new Filter("ProductID", "EQ", sQuery)];
+        oModel.read("/SalesOrderLineItemSet", {
+          filters: oFilter,
+          success: function (oData) {
+            console.log(oData);
+            var oSalesOrderFilter = [];
+            oData["results"].forEach((element) => {
+              oSalesOrderFilter.push(
+                new Filter("SalesOrderID", "EQ", element.SalesOrderID)
+              );
+            });
+            this.byId("worklist").getBinding("items").filter(oSalesOrderFilter);
+          }.bind(this),
+        });
+      },
 
       onPress: function (oEvent) {
         this._showObject(oEvent.getSource());

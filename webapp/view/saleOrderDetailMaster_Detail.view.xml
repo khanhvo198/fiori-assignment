@@ -1,0 +1,96 @@
+<mvc:View controllerName="assignment.controller.saleOrderDetailDetail"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:l="sap.ui.layout"
+  xmlns:form="sap.ui.layout.form"
+  xmlns:uxap="sap.uxap" displayBlock="true" height="100%" busyIndicatorDelay="0">
+
+  <uxap:ObjectPageLayout id="objectPageLayout" showTitleInHeaderContent="true" alwaysShowContentHeader="false" preserveHeaderStateOnScroll="false" headerContentPinnable="true" isChildPage="true" enableLazyLoading="false">
+    <uxap:headerTitle>
+      <uxap:ObjectPageDynamicHeaderTitle>
+        <uxap:breadcrumbs>
+          <Breadcrumbs>
+            <Link text='{SalesOrderID}'/>
+            <Link text='{ItemPosition}'/>
+          </Breadcrumbs>
+        </uxap:breadcrumbs>
+        <uxap:expandedHeading>
+          <FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+            <Title text="{ProductID}" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+            <FlexBox wrap="NoWrap" fitContainer="true" alignItems="Center" class="sapUiTinyMarginEnd">
+              <ObjectMarker type="Favorite" class="sapUiTinyMarginEnd"/>
+              <ObjectMarker type="Flagged"/>
+            </FlexBox>
+          </FlexBox>
+        </uxap:expandedHeading>
+        <uxap:snappedHeading>
+          <FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+            <FlexBox wrap="NoWrap" fitContainer="true" alignItems="Center" class="sapUiTinyMarginEnd">
+              <Avatar src="sap-icon://product" displaySize="S" class="sapUiTinyMarginEnd"/>
+              <Title text="{ProductID}" wrapping="true" class="sapUiTinyMarginEnd"/>
+            </FlexBox>
+            <FlexBox wrap="NoWrap" fitContainer="true" alignItems="Center" class="sapUiTinyMarginEnd">
+              <ObjectMarker type="Favorite" class="sapUiTinyMarginEnd"/>
+              <ObjectMarker type="Flagged"/>
+            </FlexBox>
+          </FlexBox>
+        </uxap:snappedHeading>
+        <uxap:expandedContent>
+          <Text text="{ToHeader/CustomerName}"/>
+        </uxap:expandedContent>
+        <uxap:snappedContent>
+          <Text text="{ToHeader/CustomerName}"/>
+        </uxap:snappedContent>
+      </uxap:ObjectPageDynamicHeaderTitle>
+    </uxap:headerTitle>
+    <uxap:headerContent>
+      <FlexBox wrap="Wrap" fitContainer="true" alignItems="Stretch">
+        <Avatar class="sapUiSmallMarginEnd sapUiSmallMarginTop" src="sap-icon://product" displaySize="L"/>
+        <l:VerticalLayout class="sapUiSmallMarginEnd sapUiSmallMarginTop">
+          <Label text="{i18n>infoItemDescription}"/>
+          <Text text="{ToHeader/Note}"/>
+        </l:VerticalLayout>
+        <l:VerticalLayout class="sapUiSmallMarginEnd sapUiSmallMarginTop">
+          <Label text="{i18n>infoItemDescriptionLanguage}"/>
+          <Text text="{ToHeader/NoteLanguage}"/>
+        </l:VerticalLayout>
+      </FlexBox>
+    </uxap:headerContent>
+    <uxap:sections>
+      <uxap:ObjectPageSection title="DETAILS">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <uxap:blocks>
+              <form:SimpleForm editable="true">
+                <Label text="Product ID" />
+                <ObjectAttribute text="{ToProduct/ProductID}" />
+                <Label text="Product Name" />
+                <ObjectAttribute text="{ToProduct/Name}" />
+                <Label text="Category" />
+                <ObjectAttribute text="{ToProduct/Category}"/>
+                <Label text="Price" />
+                <ObjectAttribute text="{ToProduct/Price}" />
+              </form:SimpleForm>
+
+            </uxap:blocks>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+    </uxap:sections>
+    <uxap:sections>
+      <uxap:ObjectPageSection title="{i18n>infoItemDeliveryTitle}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <uxap:blocks>
+              <form:SimpleForm editable="true">
+                <Label text="{i18n>infoItemDeliveryDateDescr}"/>
+                <DatePicker dateValue="{DeliveryDate}" displayFormat="long" editable="false"/>
+              </form:SimpleForm>
+            </uxap:blocks>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+    </uxap:sections>
+  </uxap:ObjectPageLayout>
+
+</mvc:View>

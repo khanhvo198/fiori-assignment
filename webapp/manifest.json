@@ -102,7 +102,17 @@
         {
           "name": "object",
           "pattern": "SalesOrderSet/{objectId}",
-          "target": "object"
+          "target": [
+            "object"
+          ]
+        },
+        {
+          "name": "detail",
+          "pattern": "SalesOrderSet/{objectId}/Item/{itemPosition}",
+          "target": [
+            "object",
+            "detail"
+          ]
         }
       ],
       "targets": {
@@ -111,10 +121,24 @@
           "viewLevel": 1,
           "viewId": "worklist"
         },
-        "object": {
+        "splitApp": {
           "viewName": "saleOrderDetail",
+          "viewId": "splitApp"
+        },
+        "object": {
+          "viewName": "saleOrderDetailMaster",
           "viewLevel": 2,
-          "viewId": "object"
+          "viewId": "object",
+          "controlId": "layout",
+          "parent": "splitApp",
+          "controlAggregation": "beginColumnPages"
+        },
+        "detail": {
+          "viewName": "saleOrderDetailMaster_Detail",
+          "viewId": "detail",
+          "controlId": "layout",
+          "parent": "splitApp",
+          "controlAggregation": "midColumnPages"
         }
       }
     },
