@@ -1,13 +1,18 @@
 sap.ui.define(
-  ["./BaseController", "sap/ui/model/json/JSONModel"],
-  function (BaseController, JSONModel) {
+  [
+    "./BaseController",
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageToast",
+    "sap/m/MessageBox",
+    "sap/ui/commons/Message",
+  ],
+  function (BaseController, JSONModel, MessageToast, MessageBox) {
     "use strict";
 
     return BaseController.extend(
       "assignment.controller.saleOrderDetailMaster",
       {
         onInit: function () {
-          console.log("asdasd");
           // Model used to manipulate control states. The chosen values make sure,
           // detail page shows busy indication immediately so there is no break in
           // between the busy indication for loading the view's meta data
@@ -65,6 +70,48 @@ sap.ui.define(
             "/layout",
             "TwoColumnsMidExpanded"
           );
+        },
+        onPressConfirm: function (sSalesOrderID) {
+          var oModel = this.getView().getModel();
+          oModel.callFunction("/SalesOrder_Confirm", {
+            method: "POST",
+            urlParameters: { SalesOrderID: sSalesOrderID },
+            success: function (oData, response) {
+              MessageBox.success("Confirm success");
+            },
+            error: function (oError) {
+              MessageBox.error("Confirm error. Try later");
+            },
+          });
+        },
+        onPressCreateGoodsIssue: function (sSalesOrderID) {
+          var oModel = this.getModel();
+          oModel.callFunction("/SalesOrder_GoodsIssueCreated", {
+            method: "POST",
+            urlParameters: { SalesOrderID: sSalesOrderID },
+            success: function (oData, response) {
+              MessageBox.success("Create Goods Issue Success");
+            },
+            error: function (oError) {
+              MessageBox.success("Create Goods Issue error. Try later");
+            },
+          });
+        },
+        onPressCreateInvoice: function (sSalesOrderID) {
+          var oModel = this.getModel();
+          oModel.callFunction("/SalesOrder_InvoiceCreated", {
+            method: "POST",
+            urlParameters: { SalesOrderID: sSalesOrderID },
+            success: function (oData, response) {
+              MessageBox.success("Create Sale Order Invoice Success");
+            },
+            error: function (oError) {
+              MessageBox.success("Create Sale Order Invoice error. Try later");
+            },
+          });
+        },
+        onPressCancel: function () {
+          this.getRouter().navTo("worklist", {}, true);
         },
       }
     );

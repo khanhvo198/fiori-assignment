@@ -19,7 +19,7 @@
             path: '/SalesOrderSet',
             sorter: {
               path: 'DeliveryStatus',
-              descending: true,
+              descending: false,
               group: '.onGroup'
             },
             groupHeaderFactory: '.groupHeader'

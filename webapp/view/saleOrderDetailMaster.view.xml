@@ -19,6 +19,8 @@
           <ObjectAttribute title="ID" text="{CustomerID}" />
           <ObjectAttribute title="Billing Status" text="{BillingStatusDescription}" />
           <ObjectAttribute title="Delivery Status" text="{DeliveryStatusDescription}" />
+          <ObjectAttribute title="Life Cycle Status" text="{LifecycleStatusDescription}" />
+
           <ObjectAttribute title="Note" text="{Note}" />
         </l:VerticalLayout>
         <l:VerticalLayout class="sapUiSmallMarginEnd sapUiSmallMarginTop">
@@ -131,7 +133,14 @@
       <semantic:ExitFullScreenAction id="exitFullScreen" visible="{= !${device>/system/phone} &amp;&amp; ${appView>/actionButtonsInfo/midColumn/fullScreen}}" press=".toggleFullScreen"/>
     </semantic:exitFullScreenAction>
     <semantic:positiveAction >
-      <semantic:PositiveAction text="Confirm" press=".onPressConfirm" visible="{= ${DeliveryStatusDescription=='Initial'} &amp;&amp; ${LifecycleStatusDescription=='New'}}"/>
+      <semantic:PositiveAction text="Confirm" press=".onPressConfirm(${SalesOrderID})" enabled="{= ${DeliveryStatusDescription}==='Initial' &amp;&amp; ${LifecycleStatusDescription} === 'New' }"/>
     </semantic:positiveAction>
+    <semantic:negativeAction>
+      <semantic:NegativeAction text="Create Goods Issue" press=".onPressCreateGoodsIssue(${SalesOrderID})" enabled="{= ${DeliveryStatusDescription}==='Initial' &amp;&amp; ${LifecycleStatusDescription} === 'In Progress' }"/>
+    </semantic:negativeAction>
+    <semantic:footerCustomActions>
+      <Button text="Create Invoice" press=".onPressCreateInvoice(${SalesOrderID})" enabled="{= ${DeliveryStatusDescription}==='Delivered' &amp;&amp; ${LifecycleStatusDescription} === 'In Progress' }" />
+      <Button text="Cancel" press=".onPressCancel"/>
+    </semantic:footerCustomActions>
   </semantic:SemanticPage>
 </mvc:View>
