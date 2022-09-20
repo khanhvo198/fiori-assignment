@@ -44,23 +44,10 @@
             <ObjectAttribute text="{ToBusinessPartner/EmailAddress}" />
             <Label text="Phone Number" />
             <ObjectAttribute text="{ToBusinessPartner/PhoneNumber}" />
-
-
           </form:SimpleForm>
 
-          <!-- <ObjectAttribute title="Business Partner ID" text="{ToBusinessPartner/BusinessPartnerID}" />
-            <ObjectAttribute title="Company Name " text="{ToBusinessPartner/CompanyName}" />
-            <ObjectAttribute title="Address" text="{ToBusinessPartner/Address/Street} {ToBusinessPartner/Address/City}" />
-            <ObjectAttribute title="Email Address" text="{ToBusinessPartner/EmailAddress}" />
-            <ObjectAttribute title="Phone Number" text="{ToBusinessPartner/PhoneNumber}" /> -->
-
-
-
-
-
-
         </Panel>
-        <Table id="lineItemsList" width="auto" items="{ToLineItems}" mode="SingleSelectMaster" updateFinished=".onListUpdateFinished" noDataText="{i18n>detailLineItemTableNoDataText}" busyIndicatorDelay="{detailView>/lineItemTableDelay}" selectionChange="action"
+        <Table id="lineItemsList" width="auto" items="{path: 'ToLineItems', parameters: {expand: 'ToProduct'} }" mode="SingleSelectMaster" updateFinished=".onListUpdateFinished" noDataText="{i18n>detailLineItemTableNoDataText}" busyIndicatorDelay="{detailView>/lineItemTableDelay}" selectionChange="action"
           xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" action:wiring="\{'selectionChange':\{'navigation':\{'routeName':'detail'\}\}\}" sticky="ColumnHeaders,HeaderToolbar">
           <headerToolbar>
             <Toolbar>
@@ -71,28 +58,56 @@
           </headerToolbar>
           <columns>
             <Column>
-              <Text text="{i18n>detailLineItemTableIDQuantity}"/>
+              <Text text="Position Item"/>
             </Column>
             <Column>
-              <Text text="{i18n>detailLineItemTableIDColumn}"/>
+              <Text text="ProductID"/>
+            </Column>
+            <Column>
+              <Text text="ProductName"/>
             </Column>
             <Column minScreenWidth="Tablet" demandPopin="true">
-              <Text text="{i18n>detailLineItemTableDeliveryDate}"/>
+              <Text text="Delivery Date"/>
             </Column>
             <Column>
-              <Text text="{i18n>detailLineItemTableDeliveryUrgency}"/>
+              <Text text="Quantity - Quantity Unit"/>
             </Column>
             <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End">
-              <Text text="{i18n>detailLineItemTableUnitNumberColumn}"/>
+              <Text text="Gross Amount"/>
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+              <Text text="Net Amount"/>
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+              <Text text="Tax Amount"/>
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+              <Text text="Currency"/>
             </Column>
           </columns>
-          <dragDropConfig>
-            <dnd:DragDropInfo sourceAggregation="items" targetAggregation="items" dropPosition="Between" drop=".onReorder"/>
-          </dragDropConfig>
           <items>
             <ColumnListItem selected="{= ${ItemPosition} === ${appView>/selectedItemId}}" type="Navigation">
               <cells>
-                <ObjectNumber number="{Quantity}"/>
+                <ObjectIdentifier title="{ItemPosition}" />
+                <ObjectAttribute text="{ProductID}"/>
+                <ObjectAttribute text="{ToProduct/Name}"/>
+                <Text text="{ path: 'DeliveryDate', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium'} }"/>
+                <ObjectNumber number="{Quantity}" unit="{QuantityUnit}"/>
+                <ObjectNumber number="{
+									path: 'GrossAmount',
+									formatter: '.formatter.currencyValue'
+								}" unit="{ path: 'CurrencyCode', formatter: '.formatter.convertCurrencyCodeToSymbol' }"/>
+                <ObjectNumber number="{
+									path: 'NetAmount',
+									formatter: '.formatter.currencyValue'
+								}" unit="{ path: 'CurrencyCode', formatter: '.formatter.convertCurrencyCodeToSymbol' }"/>
+                <ObjectNumber number="{
+									path: 'TaxAmount',
+									formatter: '.formatter.currencyValue'
+								}" unit="{ path: 'CurrencyCode', formatter: '.formatter.convertCurrencyCodeToSymbol' }"/>
+                <ObjectAttribute text="{CurrencyCode}" />
+
+                <!-- <ObjectNumber number="{Quantity}"/>
                 <ObjectIdentifier title="{ProductID}" text="{ItemPosition}"/>
                 <Text text="{ path: 'DeliveryDate', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium'} }"/>
                 <si:StatusIndicator id="statusIndicator" width="4.5rem" height="3.5rem" value="{= (Date.parse(${DeliveryDate}) - 1546300801000) / 52560000 }">
@@ -109,7 +124,7 @@
                 <ObjectNumber number="{
 									path: 'NetAmount',
 									formatter: '.formatter.currencyValue'
-								}" unit="{ path: 'CurrencyCode', formatter: '.formatter.convertCurrencyCodeToSymbol' }"/>
+								}" unit="{ path: 'CurrencyCode', formatter: '.formatter.convertCurrencyCodeToSymbol' }"/> -->
               </cells>
             </ColumnListItem>
           </items>
