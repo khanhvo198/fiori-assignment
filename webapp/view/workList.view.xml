@@ -1,5 +1,6 @@
 <mvc:View controllerName="assignment.controller.workList"
   xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
   xmlns="sap.m" displayBlock="true" height="100%" busyIndicatorDelay="0"
   xmlns:semantic="sap.f.semantic">
 
@@ -46,12 +47,18 @@
                   </suggestionRows>
                 </MultiInput>
 
-
+                <!-- 
                 <SearchField id="searchByCustomerName" placeholder="Search by Customer Name" showRefreshButton="true" tooltip="{i18n>listSearchTooltip}" search=".onSearchByCustomerName">
                   <layoutData>
                     <OverflowToolbarLayoutData maxWidth="180px" priority="NeverOverflow"/>
                   </layoutData>
-                </SearchField>
+                </SearchField> -->
+
+                <MultiInput width="20%" placeholder="Search by Customer" id="multiInputForCustomer" suggestionItems="{
+				            path: '/SalesOrderSet'
+			            }" valueHelpRequest="handleValueHelpCustomer" tokenUpdate="_onTokenUpdate">
+                  <core:Item key="{CustomerID}" text="{CustomerName}" />
+                </MultiInput>
 
                 <SearchField id="searchByProductName" placeholder="Search by Product Name" showRefreshButton="true" tooltip="{i18n>listSearchTooltip}" search=".onSearchByProductName">
                   <layoutData>

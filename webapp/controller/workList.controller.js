@@ -11,6 +11,8 @@ sap.ui.define(
     "sap/ui/table/Column",
     "sap/ui/model/FilterOperator",
     "sap/m/Token",
+    "sap/m/Tokenizer",
+    "sap/m/MessageToast",
   ],
   function (
     BaseController,
@@ -20,10 +22,12 @@ sap.ui.define(
     JSONModel,
     SearchField,
     GroupHeaderListItem,
-    TypeString,
-    UIColumn,
+    String,
+    Column,
     FilterOperator,
-    Token
+    Token,
+    Tokenizer,
+    MessageToast
   ) {
     "use strict";
 
@@ -47,6 +51,8 @@ sap.ui.define(
         oMultiInputWithSuggestions.addValidator(this._onMultiInputValidate);
         // oMultiInputWithSuggestions.setTokens(this._getDefaultTokens());
         this._oMultiInputWithSuggestions = oMultiInputWithSuggestions;
+
+        this._aTokens = [];
 
         this.setModel(oViewModel, "worklistView");
       },
@@ -158,7 +164,6 @@ sap.ui.define(
       },
 
       onValueHelpWithSuggestionsRequested: function () {
-        console.log("Hus ");
         this._oBasicSearchFieldWithSuggestions = new SearchField();
         if (!this.pDialogWithSuggestions) {
           this.pDialogWithSuggestions = this.loadFragment({
@@ -340,6 +345,99 @@ sap.ui.define(
           }
           oVHD.update();
         });
+      },
+
+      handleValueHelpCustomer: function (oEvent) {
+        var sInputValue = oEvent.getSource().getValue(),
+          oView = this.getView();
+
+        // create value help dialog
+        if (!this._pValueHelpDialog) {
+          this._pValueHelpDialog = Fragment.load({
+            id: oView.getId(),
+            name: "assignment.view.SearchDialogForCustomer",
+            controller: this,
+          }).then(function (oValueHelpDialog) {
+            oView.addDependent(oValueHelpDialog);
+            return oValueHelpDialog;
+          });
+        }
+
+        this._pValueHelpDialog.then(function (oValueHelpDialog) {
+          // create a filter for the binding
+          oValueHelpDialog
+            .getBinding("items")
+            .filter([
+              new Filter("CustomerName", FilterOperator.Contains, sInputValue),
+            ]);
+          // open value help dialog filtered by the input value
+          oValueHelpDialog.open(sInputValue);
+        });
+      },
+      _handleValueHelpSearchCustomer: function (oEvent) {
+        var sValue = oEvent.getParameter("value");
+        var oFilter = new Filter(
+          "CustomerName",
+          FilterOperator.Contains,
+          sValue
+        );
+        oEvent.getSource().getBinding("items").filter([oFilter]);
+      },
+      _handleValueHelpCloseCustomer: function (oEvent) {
+        var aSelectedItems = oEvent.getParameter("selectedItems"),
+          oMultiInput = this.byId("multiInputForCustomer");
+        if (aSelectedItems && aSelectedItems.length > 0) {
+          aSelectedItems.forEach(
+            function (oItem) {
+              console.log(oItem.getTitle());
+              oMultiInput.addToken(
+                new Token({
+                  text: oItem.getTitle(),
+                })
+              );
+              this._aTokens.push(oItem.getTitle());
+            }.bind(this)
+          );
+        }
+
+        var aFilters = [];
+        this._aTokens.forEach((token) =>
+          aFilters.push(new Filter("CustomerName", FilterOperator.EQ, token))
+        );
+        this.byId("worklist").getBinding("items").filter(aFilters);
+      },
+
+      _onTokenUpdate: function (oEvent) {
+        var aTokens, i;
+
+        if (oEvent.getParameter("type") === Tokenizer.TokenUpdateType.Added) {
+          aTokens = oEvent.getParameter("addedTokens");
+        } else if (
+          oEvent.getParameter("type") === Tokenizer.TokenUpdateType.Removed
+        ) {
+          aTokens = oEvent.getParameter("removedTokens");
+        }
+
+        for (i = 0; i < aTokens.length; i++) {
+          if (oEvent.getParameter("type") === Tokenizer.TokenUpdateType.Added) {
+            this._aTokens.push(aTokens[i].getText());
+          } else if (
+            oEvent.getParameter("type") === Tokenizer.TokenUpdateType.Removed
+          ) {
+            var indexItemRemove = this._aTokens.indexOf(aTokens[i].getText());
+
+            if (indexItemRemove > -1) {
+              this._aTokens.splice(indexItemRemove, 1);
+            }
+            console.log(this._aTokens);
+          }
+        }
+        var aFilters = [];
+
+        this._aTokens.forEach((token) =>
+          aFilters.push(new Filter("CustomerName", FilterOperator.EQ, token))
+        );
+        this.byId("worklist").getBinding("items").filter(aFilters);
       },
     });
   }

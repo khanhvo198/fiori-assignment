@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <SelectDialog id="valueHelpDialogCustomer" title="Customer" items="{/SalesOrderSet}" search="_handleValueHelpSearchCustomer" confirm="_handleValueHelpCloseCustomer" cancel="_handleValueHelpCloseCustomer" multiSelect="true">
+    <StandardListItem iconDensityAware="false" iconInset="false" title="{CustomerName}" description="{CustomerID}" />
+  </SelectDialog>
+</core:FragmentDefinition>

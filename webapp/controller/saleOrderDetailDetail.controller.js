@@ -34,6 +34,10 @@ sap.ui.define(
                 this._bindView("/" + sObjectPath);
               }.bind(this)
             );
+            this.getModel("splitAppView").setProperty(
+              "/layout",
+              "TwoColumnsMidExpanded"
+            );
         },
 
         _bindView: function (sObjectPath) {
@@ -43,6 +47,16 @@ sap.ui.define(
               expand: "ToProduct",
             },
           });
+        },
+        onPressBreadcumbsSalesOrderID: function (oEvent) {
+          this.getRouter().navTo(
+            "object",
+            {
+              objectId: oEvent.getSource().getText(),
+            },
+            false
+          );
+          this.getModel("splitAppView").setProperty("/layout", "OneColumn");
         },
       }
     );

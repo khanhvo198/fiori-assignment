@@ -10,8 +10,8 @@
       <uxap:ObjectPageDynamicHeaderTitle>
         <uxap:breadcrumbs>
           <Breadcrumbs>
-            <Link text='{SalesOrderID}'/>
-            <Link text='{ItemPosition}'/>
+            <Link text='{SalesOrderID}' press=".onPressBreadcumbsSalesOrderID" />
+            <Link text='{ItemPosition}' />
           </Breadcrumbs>
         </uxap:breadcrumbs>
         <uxap:expandedHeading>
@@ -36,10 +36,10 @@
           </FlexBox>
         </uxap:snappedHeading>
         <uxap:expandedContent>
-          <Text text="{ToHeader/CustomerName}"/>
+          <Text text="{ToProduct/CustomerName}"/>
         </uxap:expandedContent>
         <uxap:snappedContent>
-          <Text text="{ToHeader/CustomerName}"/>
+          <Text text="{ToProduct/CustomerName}"/>
         </uxap:snappedContent>
       </uxap:ObjectPageDynamicHeaderTitle>
     </uxap:headerTitle>
@@ -47,17 +47,17 @@
       <FlexBox wrap="Wrap" fitContainer="true" alignItems="Stretch">
         <Avatar class="sapUiSmallMarginEnd sapUiSmallMarginTop" src="sap-icon://product" displaySize="L"/>
         <l:VerticalLayout class="sapUiSmallMarginEnd sapUiSmallMarginTop">
-          <Label text="{i18n>infoItemDescription}"/>
-          <Text text="{ToHeader/Note}"/>
+          <Label text="Product Name"/>
+          <Text text="{ToProduct/Name}"/>
         </l:VerticalLayout>
         <l:VerticalLayout class="sapUiSmallMarginEnd sapUiSmallMarginTop">
-          <Label text="{i18n>infoItemDescriptionLanguage}"/>
-          <Text text="{ToHeader/NoteLanguage}"/>
+          <Label text="Product ID"/>
+          <Text text="{ToProduct/ProductID}"/>
         </l:VerticalLayout>
       </FlexBox>
     </uxap:headerContent>
     <uxap:sections>
-      <uxap:ObjectPageSection title="DETAILS">
+      <uxap:ObjectPageSection title="Details" titleUppercase="false">
         <uxap:subSections>
           <uxap:ObjectPageSubSection>
             <uxap:blocks>
@@ -72,20 +72,6 @@
                 <ObjectAttribute text="{ToProduct/Price}" />
               </form:SimpleForm>
 
-            </uxap:blocks>
-          </uxap:ObjectPageSubSection>
-        </uxap:subSections>
-      </uxap:ObjectPageSection>
-    </uxap:sections>
-    <uxap:sections>
-      <uxap:ObjectPageSection title="{i18n>infoItemDeliveryTitle}">
-        <uxap:subSections>
-          <uxap:ObjectPageSubSection>
-            <uxap:blocks>
-              <form:SimpleForm editable="true">
-                <Label text="{i18n>infoItemDeliveryDateDescr}"/>
-                <DatePicker dateValue="{DeliveryDate}" displayFormat="long" editable="false"/>
-              </form:SimpleForm>
             </uxap:blocks>
           </uxap:ObjectPageSubSection>
         </uxap:subSections>

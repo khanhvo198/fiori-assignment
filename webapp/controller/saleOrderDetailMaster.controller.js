@@ -45,6 +45,7 @@ sap.ui.define(
                 this._bindView("/" + sObjectPath);
               }.bind(this)
             );
+          this.getModel("splitAppView").setProperty("/layout", "OneColumn");
         },
 
         _bindView: function (sObjectPath) {
