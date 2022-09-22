@@ -30,11 +30,23 @@
                 <Title id="tableHeader" level="H3" text="{worklistView>/saleOrderTitle}" />
 
                 <ToolbarSpacer />
-                <SearchField id="searchBySaleOrderNumber" placeholder="Search by Sale Order Number" showRefreshButton="true" tooltip="{i18n>listSearchTooltip}" search=".onSearchBySaleOrderNumber">
-                  <layoutData>
-                    <OverflowToolbarLayoutData maxWidth="180px" priority="NeverOverflow"/>
-                  </layoutData>
-                </SearchField>
+                <MultiInput id="multiInputWithSuggestions" placeholder="Search by Sale Order ID" valueHelpRequest=".onValueHelpWithSuggestionsRequested" width="auto" suggestionRows="{
+				          path: '/SalesOrderSet',
+				                length: 10
+			            }">
+                  <suggestionColumns>
+                    <Column>
+                      <Label text="Sale Order ID"/>
+                    </Column>
+                  </suggestionColumns>
+                  <suggestionRows>
+                    <ColumnListItem>
+                      <Label text="{SalesOrderID}" />
+                    </ColumnListItem>
+                  </suggestionRows>
+                </MultiInput>
+
+
                 <SearchField id="searchByCustomerName" placeholder="Search by Customer Name" showRefreshButton="true" tooltip="{i18n>listSearchTooltip}" search=".onSearchByCustomerName">
                   <layoutData>
                     <OverflowToolbarLayoutData maxWidth="180px" priority="NeverOverflow"/>

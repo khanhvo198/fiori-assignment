@@ -51,9 +51,7 @@
           xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" action:wiring="\{'selectionChange':\{'navigation':\{'routeName':'detail'\}\}\}" sticky="ColumnHeaders,HeaderToolbar">
           <headerToolbar>
             <Toolbar>
-              <Title id="lineItemsTitle" text="{detailView>/lineItemListTitle}" titleStyle="H3"/>
-              <ToolbarSpacer />
-              <Button icon="sap-icon://add" tooltip="{i18n>createButtonTooltip}" press=".onCreate"/>
+              <Title id="lineItemsTitle" text="Sale Order Line Item" titleStyle="H3"/>
             </Toolbar>
           </headerToolbar>
           <columns>
@@ -106,25 +104,6 @@
 									formatter: '.formatter.currencyValue'
 								}" unit="{ path: 'CurrencyCode', formatter: '.formatter.convertCurrencyCodeToSymbol' }"/>
                 <ObjectAttribute text="{CurrencyCode}" />
-
-                <!-- <ObjectNumber number="{Quantity}"/>
-                <ObjectIdentifier title="{ProductID}" text="{ItemPosition}"/>
-                <Text text="{ path: 'DeliveryDate', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium'} }"/>
-                <si:StatusIndicator id="statusIndicator" width="4.5rem" height="3.5rem" value="{= (Date.parse(${DeliveryDate}) - 1546300801000) / 52560000 }">
-                  <si:ShapeGroup>
-                    <si:LibraryShape id="customShape0" shapeId="vehicle_truck_1"/>
-                  </si:ShapeGroup>
-                  <si:propertyThresholds>
-                    <si:PropertyThreshold fillColor="Error" toValue="50"/>
-                    <si:PropertyThreshold fillColor="Critical" toValue="65"/>
-                    <si:PropertyThreshold fillColor="Neutral" toValue="80"/>
-                    <si:PropertyThreshold fillColor="Good" toValue="100"/>
-                  </si:propertyThresholds>
-                </si:StatusIndicator>
-                <ObjectNumber number="{
-									path: 'NetAmount',
-									formatter: '.formatter.currencyValue'
-								}" unit="{ path: 'CurrencyCode', formatter: '.formatter.convertCurrencyCodeToSymbol' }"/> -->
               </cells>
             </ColumnListItem>
           </items>
@@ -132,21 +111,8 @@
       </l:VerticalLayout>
 
     </semantic:content>
-    <!--Semantic ShareMenu Buttons-->
-    <semantic:sendEmailAction>
-      <semantic:SendEmailAction id="shareEmail" press=".onSendEmailPress"/>
-    </semantic:sendEmailAction>
 
-    <semantic:closeAction>
-      <semantic:CloseAction id="closeColumn" press=".onCloseDetailPress"/>
-    </semantic:closeAction>
 
-    <semantic:fullScreenAction>
-      <semantic:FullScreenAction id="enterFullScreen" visible="{= !${device>/system/phone} &amp;&amp; !${appView>/actionButtonsInfo/midColumn/fullScreen}}" press=".toggleFullScreen"/>
-    </semantic:fullScreenAction>
-    <semantic:exitFullScreenAction>
-      <semantic:ExitFullScreenAction id="exitFullScreen" visible="{= !${device>/system/phone} &amp;&amp; ${appView>/actionButtonsInfo/midColumn/fullScreen}}" press=".toggleFullScreen"/>
-    </semantic:exitFullScreenAction>
     <semantic:positiveAction >
       <semantic:PositiveAction text="Confirm" press=".onPressConfirm(${SalesOrderID})" enabled="{= ${DeliveryStatusDescription}==='Initial' &amp;&amp; ${LifecycleStatusDescription} === 'New' }"/>
     </semantic:positiveAction>

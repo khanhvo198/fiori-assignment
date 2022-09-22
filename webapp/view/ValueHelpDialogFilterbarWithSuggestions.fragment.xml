@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns="sap.ui.comp.valuehelpdialog"
+  xmlns:m="sap.m"
+  xmlns:fb="sap.ui.comp.filterbar"
+  xmlns:core="sap.ui.core">
+  <ValueHelpDialog title="SalesOrderSet" ok=".onValueHelpWithSuggestionsOkPress" cancel=".onValueHelpWithSuggestionsCancelPress" supportRanges="true" key="SalesOrderID" descriptionKey="SalesOrderID">
+    <filterBar>
+      <fb:FilterBar advancedMode="true" search=".onFilterBarWithSuggestionsSearch" isRunningInValueHelpDialog="true">
+        <fb:filterGroupItems>
+          <fb:FilterGroupItem groupName="__$INTERNAL$" name="SalesOrderID" label="Sales Order ID" visibleInFilterBar="true">
+            <fb:control>
+              <m:Input name="SalesOrderID" showSuggestion="true" showValueHelp="false" suggestionItems="{
+										path: '/SalesOrderSet',
+										sorter: { path: 'SalesOrderID' }
+									}">
+                <core:Item key="{SalesOrderID}" text="{SalesOrderID}" />
+              </m:Input>
+            </fb:control>
+          </fb:FilterGroupItem>
+        </fb:filterGroupItems>
+      </fb:FilterBar>
+    </filterBar>
+  </ValueHelpDialog>
+</core:FragmentDefinition>
