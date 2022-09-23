@@ -29,34 +29,17 @@
             <headerToolbar>
               <OverflowToolbar>
                 <Title id="tableHeader" level="H3" text="{worklistView>/saleOrderTitle}" />
-
                 <ToolbarSpacer />
-                <MultiInput id="multiInputWithSuggestions" placeholder="Search by Sale Order ID" valueHelpRequest=".onValueHelpWithSuggestionsRequested" width="auto" suggestionRows="{
-				          path: '/SalesOrderSet',
-				                length: 10
-			            }">
-                  <suggestionColumns>
-                    <Column>
-                      <Label text="Sale Order ID"/>
-                    </Column>
-                  </suggestionColumns>
-                  <suggestionRows>
-                    <ColumnListItem>
-                      <Label text="{SalesOrderID}" />
-                    </ColumnListItem>
-                  </suggestionRows>
-                </MultiInput>
 
-                <!-- 
-                <SearchField id="searchByCustomerName" placeholder="Search by Customer Name" showRefreshButton="true" tooltip="{i18n>listSearchTooltip}" search=".onSearchByCustomerName">
-                  <layoutData>
-                    <OverflowToolbarLayoutData maxWidth="180px" priority="NeverOverflow"/>
-                  </layoutData>
-                </SearchField> -->
+                <MultiInput width="20%" placeholder="Search by Sale Order No" id="multiInputForSalesOrder" suggestionItems="{
+				            path: '/SalesOrderSet'
+			            }" valueHelpRequest="handleValueHelpSalesOrder" tokenUpdate="_onTokenUpdateForSalesOrder">
+                  <core:Item key="{SalesOrderID}" text="{SalesOrderID}"/>
+                </MultiInput>
 
                 <MultiInput width="20%" placeholder="Search by Customer" id="multiInputForCustomer" suggestionItems="{
 				            path: '/SalesOrderSet'
-			            }" valueHelpRequest="handleValueHelpCustomer" tokenUpdate="_onTokenUpdate">
+			            }" valueHelpRequest="handleValueHelpCustomer" tokenUpdate="_onTokenUpdateForCustomer">
                   <core:Item key="{CustomerID}" text="{CustomerName}" />
                 </MultiInput>
 
