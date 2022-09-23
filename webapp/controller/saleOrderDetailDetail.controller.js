@@ -1,11 +1,12 @@
 sap.ui.define(
-  ["./BaseController", "sap/ui/model/json/JSONModel"],
-  function (BaseController, JSONModel) {
+  ["./BaseController", "sap/ui/model/json/JSONModel", "../model/formatter"],
+  function (BaseController, JSONModel, formatter) {
     "use strict";
 
     return BaseController.extend(
       "assignment.controller.saleOrderDetailDetail",
       {
+        formatter: formatter,
         onInit: function () {
           // Model used to manipulate control states. The chosen values make sure,
           // detail page shows busy indication immediately so there is no break in
@@ -34,10 +35,10 @@ sap.ui.define(
                 this._bindView("/" + sObjectPath);
               }.bind(this)
             );
-            this.getModel("splitAppView").setProperty(
-              "/layout",
-              "TwoColumnsMidExpanded"
-            );
+          this.getModel("splitAppView").setProperty(
+            "/layout",
+            "TwoColumnsMidExpanded"
+          );
         },
 
         _bindView: function (sObjectPath) {

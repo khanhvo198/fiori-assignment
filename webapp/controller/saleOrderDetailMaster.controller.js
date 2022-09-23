@@ -4,14 +4,16 @@ sap.ui.define(
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
     "sap/m/MessageBox",
-    "sap/ui/commons/Message",
+    "../model/formatter",
   ],
-  function (BaseController, JSONModel, MessageToast, MessageBox) {
+  function (BaseController, JSONModel, MessageToast, MessageBox, formatter) {
     "use strict";
 
     return BaseController.extend(
       "assignment.controller.saleOrderDetailMaster",
       {
+        formatter: formatter,
+
         onInit: function () {
           // Model used to manipulate control states. The chosen values make sure,
           // detail page shows busy indication immediately so there is no break in

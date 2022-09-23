@@ -47,28 +47,28 @@
       <FlexBox wrap="Wrap" fitContainer="true" alignItems="Stretch">
         <Avatar class="sapUiSmallMarginEnd sapUiSmallMarginTop" src="sap-icon://product" displaySize="L"/>
         <l:VerticalLayout class="sapUiSmallMarginEnd sapUiSmallMarginTop">
-          <Label text="Product Name"/>
+          <Label text="{i18n>ProductName}"/>
           <Text text="{ToProduct/Name}"/>
         </l:VerticalLayout>
         <l:VerticalLayout class="sapUiSmallMarginEnd sapUiSmallMarginTop">
-          <Label text="Product ID"/>
+          <Label text="{i18n>ProductID}"/>
           <Text text="{ToProduct/ProductID}"/>
         </l:VerticalLayout>
       </FlexBox>
     </uxap:headerContent>
     <uxap:sections>
-      <uxap:ObjectPageSection title="Details" titleUppercase="false">
+      <uxap:ObjectPageSection title="{i18n>Details}" titleUppercase="false">
         <uxap:subSections>
           <uxap:ObjectPageSubSection>
             <uxap:blocks>
               <form:SimpleForm editable="true">
-                <Label text="Product ID" />
+                <Label text="{i18n>ProductID}" />
                 <ObjectAttribute text="{ToProduct/ProductID}" />
-                <Label text="Product Name" />
+                <Label text="{i18n>ProductName}" />
                 <ObjectAttribute text="{ToProduct/Name}" />
-                <Label text="Category" />
+                <Label text="{i18n>Category}" />
                 <ObjectAttribute text="{ToProduct/Category}"/>
-                <Label text="Price" />
+                <Label text="{i18n>Price}" />
                 <ObjectAttribute text="{ToProduct/Price}" />
               </form:SimpleForm>
 

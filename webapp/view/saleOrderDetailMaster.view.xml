@@ -16,10 +16,10 @@
         <Avatar class="sapUiSmallMarginEnd sapUiSmallMarginTop" src="sap-icon://product" displaySize="L"/>
         <l:VerticalLayout class="sapUiSmallMarginEnd sapUiSmallMarginTop">
           <ObjectIdentifier title="{CustomerName}" />
-          <ObjectAttribute title="ID" text="{CustomerID}" />
-          <ObjectAttribute title="Billing Status" text="{BillingStatusDescription}" />
-          <ObjectAttribute title="Delivery Status" text="{DeliveryStatusDescription}" />
-          <ObjectAttribute title="Life Cycle Status" text="{LifecycleStatusDescription}" />
+          <ObjectAttribute title="{i18n>ID}" text="{CustomerID}" />
+          <ObjectAttribute title="{i18n>BillingStatus}" text="{BillingStatusDescription}" />
+          <ObjectAttribute title="{i18n>DeliveryStatus}" text="{DeliveryStatusDescription}" />
+          <ObjectAttribute title="{i18n>LifeCycleStatus}" text="{LifecycleStatusDescription}" />
 
           <ObjectAttribute title="Note" text="{Note}" />
         </l:VerticalLayout>
@@ -32,17 +32,17 @@
     </semantic:headerContent>
     <semantic:content>
       <l:VerticalLayout>
-        <Panel headerText="Business Partner Detail" expandable="true" expanded="true" id="orderPreparations">
+        <Panel headerText="{i18n>BusinessPartnerDetail}" expandable="true" expanded="true" id="orderPreparations">
           <form:SimpleForm editable="true">
-            <Label text="Business Partner ID" />
+            <Label text="{i18n>BusinessPartnerID}" />
             <ObjectAttribute text="{ToBusinessPartner/BusinessPartnerID}" />
-            <Label text="Company Name" />
+            <Label text="{i18n>CompanyName}" />
             <ObjectAttribute text="{ToBusinessPartner/CompanyName}" />
-            <Label text="Address" />
+            <Label text="{i18n>Address}" />
             <ObjectAttribute text="{ToBusinessPartner/Address/Street} {ToBusinessPartner/Address/City}" />
-            <Label text="Email Address" />
+            <Label text="{i18n>EmailAddress}" />
             <ObjectAttribute text="{ToBusinessPartner/EmailAddress}" />
-            <Label text="Phone Number" />
+            <Label text="{i18n>PhoneNumber}" />
             <ObjectAttribute text="{ToBusinessPartner/PhoneNumber}" />
           </form:SimpleForm>
 
@@ -51,36 +51,36 @@
           xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" action:wiring="\{'selectionChange':\{'navigation':\{'routeName':'detail'\}\}\}" sticky="ColumnHeaders,HeaderToolbar">
           <headerToolbar>
             <Toolbar>
-              <Title id="lineItemsTitle" text="Sale Order Line Item" titleStyle="H3"/>
+              <Title id="lineItemsTitle" text="{i18n>SaleOrderLineItem}" titleStyle="H3"/>
             </Toolbar>
           </headerToolbar>
           <columns>
-            <Column>
-              <Text text="Position Item"/>
-            </Column>
-            <Column>
-              <Text text="ProductID"/>
-            </Column>
-            <Column>
-              <Text text="ProductName"/>
+            <Column minScreenWidth="Tablet" demandPopin="true">
+              <Text text="{i18n>PositionItem}"/>
             </Column>
             <Column minScreenWidth="Tablet" demandPopin="true">
-              <Text text="Delivery Date"/>
+              <Text text="{i18n>ProductID}"/>
             </Column>
-            <Column>
-              <Text text="Quantity - Quantity Unit"/>
+            <Column minScreenWidth="Tablet" demandPopin="true">
+              <Text text="{i18n>ProductName}"/>
             </Column>
-            <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End">
-              <Text text="Gross Amount"/>
+            <Column minScreenWidth="Desktop" demandPopin="true">
+              <Text text="{i18n>DeliveryDate}"/>
             </Column>
-            <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End">
-              <Text text="Net Amount"/>
-            </Column>
-            <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End">
-              <Text text="Tax Amount"/>
+            <Column minScreenWidth="Desktop" demandPopin="true">
+              <Text text="{i18n>Quantity}"/>
             </Column>
             <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End">
-              <Text text="Currency"/>
+              <Text text="{i18n>GrossAmount}"/>
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+              <Text text="{i18n>NetAmount}"/>
+            </Column>
+            <Column minScreenWidth="Desktop" demandPopin="true" hAlign="End">
+              <Text text="{i18n>TaxAmount}"/>
+            </Column>
+            <Column minScreenWidth="Desktop" demandPopin="true" hAlign="End">
+              <Text text="{i18n>Currency}"/>
             </Column>
           </columns>
           <items>

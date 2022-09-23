@@ -10,10 +10,10 @@
     <semantic:content>
       <IconTabBar id="iconTabBar" select="onQuickFilter" expandable="false" applyContentPadding="false">
         <items>
-          <IconTabFilter key="all" showAll="true" count="All" text="Sale Orders"/>
+          <IconTabFilter key="all" showAll="true" count="All" text="{i18n>saleOrderTitle}"/>
           <IconTabSeparator/>
-          <IconTabFilter key="paid" icon="sap-icon://paid-leave" iconColor="Positive" count="{worklistView>/paid}" text="Paid"/>
-          <IconTabFilter key="unPaid" icon="sap-icon://unpaid-leave" iconColor="Critical" count="{worklistView>/unPaid}" text="Un-Paid"/>
+          <IconTabFilter key="paid" icon="sap-icon://paid-leave" iconColor="Positive" count="{worklistView>/paid}" text="{i18n>Paid}"/>
+          <IconTabFilter key="unPaid" icon="sap-icon://unpaid-leave" iconColor="Critical" count="{worklistView>/unPaid}" text="{i18n>UnPaid}"/>
         </items>
         <content>
           <Table id="worklist" width="auto" items="{ 
@@ -54,28 +54,28 @@
 
             <columns>
               <Column>
-                <Text text="Sale Order No" />
+                <Text text="{i18n>SaleOrderNo}" />
               </Column>
               <Column >
-                <Text text="Customer Name"/>
+                <Text text="{i18n>CustomerName}"/>
               </Column>
               <Column>
-                <Text text="Customer ID" />
+                <Text text="{i18n>CustomerID}" />
               </Column>
               <Column>
-                <Text text="Gross Amount" />
+                <Text text="{i18n>GrossAmount}" />
               </Column>
               <Column>
-                <Text text="Net Amount" />
+                <Text text="{i18n>NetAmount}" />
               </Column>
               <Column>
-                <Text text="Tax Amount" />
+                <Text text="{i18n>TaxAmount}" />
               </Column>
               <Column>
-                <Text text="Billing" />
+                <Text text="{i18n>Billing}" />
               </Column>
               <Column>
-                <Text text="Delivery" />
+                <Text text="{i18n>Delivery}" />
               </Column>
             </columns>
             <items>

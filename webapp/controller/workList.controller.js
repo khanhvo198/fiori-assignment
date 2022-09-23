@@ -13,6 +13,7 @@ sap.ui.define(
     "sap/m/Token",
     "sap/m/Tokenizer",
     "sap/m/MessageToast",
+    "../model/formatter",
   ],
   function (
     BaseController,
@@ -27,7 +28,8 @@ sap.ui.define(
     FilterOperator,
     Token,
     Tokenizer,
-    MessageToast
+    MessageToast,
+    formatter
   ) {
     "use strict";
 
@@ -35,6 +37,8 @@ sap.ui.define(
       /**
        * @override
        */
+      formatter: formatter,
+
       onInit: function () {
         this._mFilters = {
           paid: [new Filter("BillingStatus", "EQ", "P")],
@@ -84,25 +88,6 @@ sap.ui.define(
         var sKey = oEvent.getParameter("key");
         var oTableBinding = this.byId("worklist").getBinding("items");
         oTableBinding.filter(this._mFilters[sKey]);
-      },
-
-      onSearchByProductName: function (oEvent) {
-        var sQuery = oEvent.getParameter("query");
-        var oModel = this.getModel();
-        var oFilter = [new Filter("ProductID", "EQ", sQuery)];
-        oModel.read("/SalesOrderLineItemSet", {
-          filters: oFilter,
-          success: function (oData) {
-            console.log(oData);
-            var oSalesOrderFilter = [];
-            oData["results"].forEach((element) => {
-              oSalesOrderFilter.push(
-                new Filter("SalesOrderID", "EQ", element.SalesOrderID)
-              );
-            });
-            this.byId("worklist").getBinding("items").filter(oSalesOrderFilter);
-          }.bind(this),
-        });
       },
 
       onPress: function (oEvent) {
