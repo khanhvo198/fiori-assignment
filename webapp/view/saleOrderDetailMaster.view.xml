@@ -47,7 +47,7 @@
           </form:SimpleForm>
 
         </Panel>
-        <Table id="lineItemsList" width="auto" items="{path: 'ToLineItems', parameters: {expand: 'ToProduct'} }" mode="SingleSelectMaster" updateFinished=".onListUpdateFinished" noDataText="{i18n>detailLineItemTableNoDataText}" busyIndicatorDelay="{detailView>/lineItemTableDelay}" selectionChange="action"
+        <Table id="lineItemsList" width="auto" items="{path: 'ToLineItems', parameters: {expand: 'ToProduct'} }" mode="SingleSelectMaster" updateFinished=".onListUpdateFinished" noDataText="{i18n>detailLineItemTableNoDataText}" selectionChange="action"
           xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" action:wiring="\{'selectionChange':\{'navigation':\{'routeName':'detail'\}\}\}" sticky="ColumnHeaders,HeaderToolbar">
           <headerToolbar>
             <Toolbar>
@@ -84,7 +84,7 @@
             </Column>
           </columns>
           <items>
-            <ColumnListItem selected="{= ${ItemPosition} === ${appView>/selectedItemId}}" type="Navigation">
+            <ColumnListItem type="Navigation">
               <cells>
                 <ObjectIdentifier title="{ItemPosition}" />
                 <ObjectAttribute text="{ProductID}"/>

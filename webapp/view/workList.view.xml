@@ -43,11 +43,12 @@
                   <core:Item key="{CustomerID}" text="{CustomerName}" />
                 </MultiInput>
 
-                <SearchField id="searchByProductName" placeholder="Search by Product Name" showRefreshButton="true" tooltip="{i18n>listSearchTooltip}" search=".onSearchByProductName">
-                  <layoutData>
-                    <OverflowToolbarLayoutData maxWidth="180px" priority="NeverOverflow"/>
-                  </layoutData>
-                </SearchField>
+                <MultiInput width="20%" placeholder="Search by Product" id="multiInputForProduct" suggestionItems="{
+				            path: '/ProductSet'
+			            }" valueHelpRequest="handleValueHelpProduct" tokenUpdate="_onTokenUpdateForProduct">
+                  <core:Item key="{ProductID}" text="{Name}" />
+                </MultiInput>
+
               </OverflowToolbar>
             </headerToolbar>
 

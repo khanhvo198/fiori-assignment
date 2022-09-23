@@ -74,40 +74,51 @@ sap.ui.define(
         },
         onPressConfirm: function (sSalesOrderID) {
           var oModel = this.getView().getModel();
+          oModel.setUseBatch(false);
+
           oModel.callFunction("/SalesOrder_Confirm", {
             method: "POST",
             urlParameters: { SalesOrderID: sSalesOrderID },
             success: function (oData, response) {
               MessageBox.success("Confirm success");
+              oModel.setUseBatch(true);
             },
             error: function (oError) {
               MessageBox.error("Confirm error. Try later");
+              oModel.setUseBatch(true);
             },
           });
         },
         onPressCreateGoodsIssue: function (sSalesOrderID) {
           var oModel = this.getModel();
+          oModel.setUseBatch(false);
           oModel.callFunction("/SalesOrder_GoodsIssueCreated", {
             method: "POST",
             urlParameters: { SalesOrderID: sSalesOrderID },
             success: function (oData, response) {
               MessageBox.success("Create Goods Issue Success");
+              oModel.setUseBatch(true);
             },
             error: function (oError) {
-              MessageBox.success("Create Goods Issue error. Try later");
+              MessageBox.error("Create Goods Issue error. Try later");
+              oModel.setUseBatch(true);
             },
           });
         },
         onPressCreateInvoice: function (sSalesOrderID) {
           var oModel = this.getModel();
+          oModel.setUseBatch(false);
+
           oModel.callFunction("/SalesOrder_InvoiceCreated", {
             method: "POST",
             urlParameters: { SalesOrderID: sSalesOrderID },
             success: function (oData, response) {
               MessageBox.success("Create Sale Order Invoice Success");
+              oModel.setUseBatch(true);
             },
             error: function (oError) {
-              MessageBox.success("Create Sale Order Invoice error. Try later");
+              MessageBox.error("Create Sale Order Invoice error. Try later");
+              oModel.setUseBatch(true);
             },
           });
         },

@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <SelectDialog id="valueHelpDialogProduct" title="Product" items="{/ProductSet}" search="_handleValueHelpSearchProduct" confirm="_handleValueHelpCloseProduct" cancel="_handleValueHelpCloseProduct" multiSelect="true">
+    <StandardListItem iconDensityAware="false" iconInset="false" title="{ProductID}" description="{Name}" />
+  </SelectDialog>
+</core:FragmentDefinition>

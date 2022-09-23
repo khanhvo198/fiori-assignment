@@ -73,8 +73,7 @@
         "dataSource": "mainService",
         "preload": true,
         "settings": {
-          "defaultBindingMode": "TwoWay",
-          "useBatch": false
+          "defaultBindingMode": "TwoWay"
         }
       }
     },

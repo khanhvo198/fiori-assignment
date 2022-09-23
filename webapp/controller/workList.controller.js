@@ -47,11 +47,10 @@ sap.ui.define(
           saleOrderTitle: this.getResourceBundle().getText("saleOrderTitle"),
         });
 
-        // this._aTokens = [];
-
         this._aTokens = {
           orders: [],
           customers: [],
+          products: [],
         };
         this.setModel(oViewModel, "worklistView");
       },
@@ -161,7 +160,7 @@ sap.ui.define(
       _handleValueHelpSearchSalesOrder: function (oEvent) {
         var sValue = oEvent.getParameter("value");
         var oFilter = new Filter(
-          "salesOrderID",
+          "SalesOrderID",
           FilterOperator.Contains,
           sValue
         );
@@ -316,6 +315,122 @@ sap.ui.define(
           aFilters.push(new Filter("CustomerName", FilterOperator.EQ, token))
         );
         this.byId("worklist").getBinding("items").filter(aFilters);
+      },
+
+      handleValueHelpProduct: function (oEvent) {
+        var sInputValue = oEvent.getSource().getValue(),
+          oView = this.getView();
+
+        // create value help dialog
+        if (!this._pValueHelpDialogOfProduct) {
+          this._pValueHelpDialogOfProduct = Fragment.load({
+            id: oView.getId(),
+            name: "assignment.view.SearchDialogForProduct",
+            controller: this,
+          }).then(function (oValueHelpDialog) {
+            oView.addDependent(oValueHelpDialog);
+            return oValueHelpDialog;
+          });
+        }
+
+        this._pValueHelpDialogOfProduct.then(function (oValueHelpDialog) {
+          // create a filter for the binding
+          oValueHelpDialog
+            .getBinding("items")
+            .filter([
+              new Filter("ProductID", FilterOperator.Contains, sInputValue),
+            ]);
+          // open value help dialog filtered by the input value
+          oValueHelpDialog.open(sInputValue);
+        });
+      },
+      _handleValueHelpSearchProduct: function (oEvent) {
+        var sValue = oEvent.getParameter("value");
+        var oFilter = new Filter("ProductID", FilterOperator.Contains, sValue);
+        oEvent.getSource().getBinding("items").filter([oFilter]);
+      },
+      _handleValueHelpCloseProduct: function (oEvent) {
+        var aSelectedItems = oEvent.getParameter("selectedItems"),
+          oMultiInput = this.byId("multiInputForProduct");
+        if (aSelectedItems && aSelectedItems.length > 0) {
+          aSelectedItems.forEach(
+            function (oItem) {
+              console.log(oItem.getTitle());
+              oMultiInput.addToken(
+                new Token({
+                  text: oItem.getTitle(),
+                })
+              );
+              this._aTokens.products.push(oItem.getTitle());
+            }.bind(this)
+          );
+        }
+
+        var oModel = this.getModel();
+        var aFilters = [];
+        this._aTokens.products.forEach((token) => {
+          aFilters.push(new Filter("ProductID", FilterOperator.EQ, token));
+        });
+        oModel.read("/SalesOrderLineItemSet", {
+          filters: aFilters,
+          success: function (oData) {
+            console.log(oData.results);
+            var aSalesOrderFilter = [];
+            oData.results.forEach((item) => {
+              aSalesOrderFilter.push(
+                new Filter("SalesOrderID", FilterOperator.EQ, item.SalesOrderID)
+              );
+            });
+            console.log(aSalesOrderFilter);
+            this.byId("worklist").getBinding("items").filter(aSalesOrderFilter);
+          }.bind(this),
+        });
+      },
+      _onTokenUpdateForProduct: function (oEvent) {
+        var aTokens, i;
+
+        if (oEvent.getParameter("type") === Tokenizer.TokenUpdateType.Added) {
+          aTokens = oEvent.getParameter("addedTokens");
+        } else if (
+          oEvent.getParameter("type") === Tokenizer.TokenUpdateType.Removed
+        ) {
+          aTokens = oEvent.getParameter("removedTokens");
+        }
+
+        for (i = 0; i < aTokens.length; i++) {
+          if (oEvent.getParameter("type") === Tokenizer.TokenUpdateType.Added) {
+            this._aTokens.products.push(aTokens[i].getText());
+          } else if (
+            oEvent.getParameter("type") === Tokenizer.TokenUpdateType.Removed
+          ) {
+            var indexItemRemove = this._aTokens.products.indexOf(
+              aTokens[i].getText()
+            );
+
+            if (indexItemRemove > -1) {
+              this._aTokens.products.splice(indexItemRemove, 1);
+            }
+          }
+        }
+
+        var oModel = this.getModel();
+        var aFilters = [];
+        this._aTokens.products.forEach((token) => {
+          aFilters.push(new Filter("ProductID", FilterOperator.EQ, token));
+        });
+
+        oModel.read("/SalesOrderLineItemSet", {
+          filters: aFilters,
+          success: function (oData) {
+            var oSalesOrderFilter = [];
+            oData["results"].forEach((element) => {
+              oSalesOrderFilter.push(
+                new Filter("SalesOrderID", "EQ", element.SalesOrderID)
+              );
+            });
+            this.byId("worklist").getBinding("items").filter(oSalesOrderFilter);
+          }.bind(this),
+        });
       },
     });
   }
